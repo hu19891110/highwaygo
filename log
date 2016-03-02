@@ -1,0 +1,58 @@
+1、创建项目
+	composer create-project laravel/laravel=5.1.* --prefer-dist highwaygo.localhost.com
+
+2、加入权限管理包Entrust
+	"zizaco/entrust": "dev-laravel-5"加入到composer.json，然后执行composer install。
+	'Zizaco\Entrust\EntrustServiceProvider',加入到config/app.php的providers数组，'Zizaco\Entrust\EntrustServiceProvider::class'加入到aliases数组中。
+	    'role' => Zizaco\Entrust\Middleware\EntrustRole::class,
+    'permission' => Zizaco\Entrust\Middleware\EntrustPermission::class,
+    'ability' => Zizaco\Entrust\Middleware\EntrustAbility::class,
+    加入到中间件（app/Http/Kernel.php的routeMiddleware数组）中
+
+    设置config/auth.php
+    生成migration
+    php artisan entrust:migration
+    php artisan migrate
+
+    创建模型 Role.php Permission.php  继承自Zizaco\Entrust\EntrustRole(Permission);
+    修改模型 User.php 加入trait Zizaco\Entrust\Traits\EntrustUserTrait {
+        EntrustUserTrait::can as may;
+        Authorizable::can insteadof EntrustUserTrait;
+    } // 解决两个trait的方法重名
+    composer dump-autoload
+
+3、加入Html包
+	添加到composer.json的require-dev
+	"laravelcollective/html": "5.1.*"
+	更新 composer update
+	加入到config/app.php
+	在 providers 加入 Collective\Html\HtmlServiceProvider::class
+	在 aliases 加入        
+	'Form'      => Collective\Html\FormFacade::class,
+    'Html'      => Collective\Html\HtmlFacade::class,
+4、加入安正超中文语言包
+    "overtrue/laravel-lang": "1.0.*"
+    composer update
+    完成上面的操作后，将项目文件 config/app.php 中的下一行
+    Illuminate\Translation\TranslationServiceProvider::class,
+    替换为：
+    Overtrue\LaravelLang\TranslationServiceProvider::class,
+    'locale' => 'zh-CN',
+
+5、加入验证码包
+    "mews/captcha": "~2.0"
+    composer update
+    'providers' => [
+        // ...
+        Mews\Captcha\CaptchaServiceProvider::class,
+    ]
+    'aliases' => [
+        // ...
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+    ]
+
+    php artisan vendor:publish
+
+6、加入结构生成器字段修改包
+    "doctrine/dbal": "*"
+    composer update
