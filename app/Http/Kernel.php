@@ -20,6 +20,7 @@ class Kernel extends HttpKernel {
 		Illuminate\Session\Middleware\StartSession::class,
 		Illuminate\View\Middleware\ShareErrorsFromSession::class,
 		App\Http\Middleware\VerifyCsrfToken::class,
+		App\Http\Middleware\CheckBanIp::class,
 	];
 
 	/**
@@ -30,6 +31,7 @@ class Kernel extends HttpKernel {
 	protected $routeMiddleware = [
 		'auth'          => App\Http\Middleware\Authenticate::class,
 		'auth.basic'    => Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+		'auth.admin'    => App\Http\Middleware\AdminAuthenticate::class,
 		'guest'         => App\Http\Middleware\RedirectIfAuthenticated::class,
 		'role'          => Zizaco\Entrust\Middleware\EntrustRole::class,
 		'permission'    => Zizaco\Entrust\Middleware\EntrustPermission::class,

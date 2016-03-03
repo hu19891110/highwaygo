@@ -13,6 +13,7 @@ class AuthController extends \App\Http\Controllers\Controller {
 			'postLoginVerify',
 		]]);
 	}
+
 	public function getIndex() {
 		echo "ok";
 	}
