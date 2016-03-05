@@ -92,3 +92,6 @@
 .color-grey {
     color: grey;
 }
+.item-img>img {
+    width: 600px;
+}

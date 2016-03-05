@@ -32,6 +32,7 @@ class Kernel extends HttpKernel {
 		'auth'          => App\Http\Middleware\Authenticate::class,
 		'auth.basic'    => Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
 		'auth.admin'    => App\Http\Middleware\AdminAuthenticate::class,
+		// 只有游客能访问的页面
 		'guest'         => App\Http\Middleware\RedirectIfAuthenticated::class,
 		'role'          => Zizaco\Entrust\Middleware\EntrustRole::class,
 		'permission'    => Zizaco\Entrust\Middleware\EntrustPermission::class,

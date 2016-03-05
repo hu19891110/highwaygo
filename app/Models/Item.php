@@ -17,4 +17,8 @@ class Item extends Model {
 	public function favorites() {
 		return $this->hasMany('App\Models\Favorite');
 	}
+
+	public function imgs() {
+		return $this->hasMany('App\Models\ItemImg');
+	}
 }
