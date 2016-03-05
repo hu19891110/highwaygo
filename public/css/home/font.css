@@ -1,0 +1,13 @@
+
+@font-face {
+    font-family: 'swistblnk';
+    src: url('/font/Swistblnk_Neaments_Free.eot') /* EOT file for IE */
+}
+@font-face {
+    font-family: 'swistblnk';
+    src: url('/font/Swistblnk_Neaments_Free.ttf') /* TTF file for CSS3 browsers */
+}
+@font-face {
+    font-family: 'swistblnk';
+    src: url('/font/Swistblnk_Neaments_Free.svg') /* SVG file for Chrome、IPhone browsers */
+}

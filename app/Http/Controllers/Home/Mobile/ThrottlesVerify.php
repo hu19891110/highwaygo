@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User\Mobile;
+namespace App\Http\Controllers\Home\Mobile;
 
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;

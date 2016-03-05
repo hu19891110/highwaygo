@@ -1,0 +1,32 @@
+a.navbar-brand {
+    color: #a00a0a !important;
+    text-shadow: 1px 1px #000;
+}
+a.navbar-brand:hover {
+    color: #777 !important;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+.search-input {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-right: 0;
+}
+.search-fields>button {
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background-color: #A00A0A;
+    color: #fff;
+}
+
+.portrait {
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}

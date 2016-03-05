@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User\Mobile;
+namespace App\Http\Controllers\Home\Mobile;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;

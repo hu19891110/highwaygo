@@ -1,17 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\User\Mobile;
+namespace App\Http\Controllers\Home\Mobile;
 
-use App\Http\Controllers\User\Mobile\Message;
+use App\Http\Controllers\Home\Mobile\Message;
+use App\Http\Controllers\Home\Mobile\ThrottlesSend;
+use App\Http\Controllers\Home\Mobile\ThrottlesVerify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 trait SendAndVerify {
-	use \App\Http\Controllers\User\Mobile\ThrottlesSend,
-	\App\Http\Controllers\User\Mobile\ThrottlesVerify;
+	use ThrottlesSend, ThrottlesVerify;
+
+	public function getMobileRegister(Request $request) {
+		return view('home.auth.mobile.register');
+	}
 
 	// 注册帐号发送验证码
-	public function getRegisterSend(Request $request) {
+	public function postRegisterSend(Request $request) {
 		$result = $this->send($request, [
 			$request->only('mobile'),
 			['mobile' => 'unique:users'],
@@ -46,22 +52,56 @@ trait SendAndVerify {
 	}
 
 	public function postLoginSend(Request $request) {
-		$result = $this->send($request);
+		$mobile = $request->input('mobile');
+		if (!User::where('mobile', '=', $mobile)->get()->first()) {
+			return ['code' => -1, 'message' => '手机还未注册,请注册后在登陆'];
+		}
+		$result = $this->resolveResult($this->send($request));
 		if ($result === true) {
-			return 'ok';
+			return ['code' => 0];
+		} else if ($result === false) {
+			return ['code' => -1, 'message' => '服务器繁忙,请稍后再试'];
 		} else {
-			dd($result);
+			return ['code' => 1, 'message' => $result];
 		}
 	}
 
-	public function postLoginVerify(Request $request) {
-		$result = $this->verify($request);
+	public function postMobileLogin(Request $request) {
+		$result = $this->resolveResult($this->verify($request));
 		if ($result === true) {
-			$this->clearVerifyAttempts($request);
-			return 'ok';
+			if (Auth::attempt($request->only('mobile'), $request->has('remember'))) {
+				$this->clearSendAttempts($request);
+				$this->clearVerifyAttempts($request);
+				return redirect()->intended($this->redirectPath());
+			} else {
+				$errors = ['mobile' => '手机号不存在'];
+			}
+		} else if ($result === false) {
+			$errors = ['error' => '请输入正确的验证码'];
 		} else {
-			dd($result);
+			$errors = $result;
 		}
+		return redirect($this->getMobileLoginPath())
+			->with('availableSendIn', $this->getAvailableSendIn())
+			->withInput($request->only('mobile', 'token'))
+			->withErrors($errors);
+	}
+
+	private function resolveResult($result) {
+		if ($result === true) {
+			return true;
+		} else if ($result === false) {
+			return false;
+		} else if (is_string($result)) {
+			return ['error' => $result];
+		} else if (is_array($result)) {
+			return $result;
+		} else if ($result instanceof MessageBag) {
+			return $result->all();
+		} else {
+			return ['error' => '服务器发生故障'];
+		}
+
 	}
 
 	protected function send(Request $request, $v = null) {
@@ -137,5 +177,9 @@ trait SendAndVerify {
 		return [
 			'mobile' => ['required', 'regex:/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/'], //注意: 当使用regex模式时，您必须使用数组来取代"|"作为分隔，尤其是当正规表示式中含有"|"字串。
 		];
+	}
+
+	protected function getMobileLoginPath() {
+		return property_exists($this, 'mobileLoginPath') ? $this->mobileLoginPath : 'auth/mobile-login';
 	}
 }

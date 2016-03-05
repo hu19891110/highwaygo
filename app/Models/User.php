@@ -9,12 +9,16 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract,
 AuthorizableContract,
 CanResetPasswordContract {
 	use Authenticatable, Authorizable, CanResetPassword;
-
+	use EntrustUserTrait {
+		EntrustUserTrait::can as may;
+		Authorizable::can insteadof EntrustUserTrait;
+	}
 	/**
 	 * The database table used by the model.
 	 *

@@ -1,0 +1,94 @@
+/* #A00A0A*/
+
+* {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:hover,
+.input-group-btn > .btn:active,
+.input-group-btn > .btn:focus,
+.input-group-btn > .btn:hover {
+    color: #A00A0A;
+}
+
+.input-group-btn > .btn:active,
+.input-group-btn > .btn:focus,
+.input-group-btn > .btn:hover {
+    background-color: #fff;
+    color: #A00A0A;
+}
+
+.form-control:focus{
+/*.form-control:focus+.input-group-btn>.btn {*/
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(160, 10, 10, 0.6);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(160, 10, 10, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(160, 10, 10, 0.6);
+    border-color: #A00A0A;
+}
+
+.form-control:focus+.input-group-btn>.btn {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(160, 10, 10, 0.6);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(160, 10, 10, 0.6);
+    box-shadow: 0px;/*1px 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(227, 43, 7, 0.6);*/
+    border-color: #A00A0A;
+    border-left: 0;
+    background-color: #fff;
+    color: #A00A0A;
+}
+
+.dropdown,
+.dropdown-menu {
+    min-width: 120px;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.item img {
+    margin: 0 auto;
+}
+
+.carousel-control.left {
+    background-image: none;
+}
+.carousel-control.right {
+    background-image: none;
+}
+.carousel-control:hover>span {
+    color: #A00A0A;
+}
+
+.caption p{
+    text-align: center;
+}
+
+.badge {
+    padding: 4px 7px;
+    border-radius: 2px;
+    background-color: #ffffff;
+}
+
+.bgred {
+   background-color: #A00A0A;
+}
+
+.bggreen {
+    background-color: #0aa00a;
+}
+
+.bgyellow {
+    background-color: #a09d1d;
+}
+
+.color-grey {
+    color: grey;
+}

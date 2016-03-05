@@ -37,5 +37,6 @@ class Kernel extends HttpKernel {
 		'permission'    => Zizaco\Entrust\Middleware\EntrustPermission::class,
 		'ability'       => Zizaco\Entrust\Middleware\EntrustAbility::class,
 		'mobile.access' => App\Http\Middleware\MobileAccess::class,
+		'auth.view'     => App\Http\Middleware\Auth2View::class,
 	];
 }
