@@ -1,0 +1,1 @@
+重置密码链接: {{ url('password/reset/'.$token) }}

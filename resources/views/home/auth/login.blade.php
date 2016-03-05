@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 text-center">
-                        <button type="submit" id="submit" class="btn btn-default">登陆</button>  <a class="btn" href="/auth/mobile-login">短信登陆</a>
+                        <button type="submit" id="submit" class="btn btn-default">登陆</button>  <a class="btn" href="/auth/mobile-login">短信登陆</a>  <a class="btn" href="/password/email">忘记密码?</a>
                     </div>
                 </div>
                 {!! Form::close() !!}

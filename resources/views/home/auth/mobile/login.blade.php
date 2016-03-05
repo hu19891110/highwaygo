@@ -18,7 +18,7 @@
                 @endif
                 {!! Form::open(['method' => 'post', 'class' => 'form-horizontal', 'id' => 'login-form']) !!}
                 <div class="form-group">
-                    <label for="captcha" class="col-sm-2 col-xs-12 control-label">手机号</label>
+                    <label for="mobile" class="col-sm-2 col-xs-12 control-label">手机号</label>
                     <div class="col-sm-8 col-xs-6">
                         <input type="text" value="{{old('mobile')}}" maxlength="11" value="{{old('captcha')}}" class="form-control" id="mobile" name="mobile" placeholder="手机号">
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mobile" class="col-sm-2 control-label">验证码</label>
+                    <label for="token" class="col-sm-2 control-label">验证码</label>
                     <div class="col-sm-10">
                         <input type="text" disabled value="{{old('token')}}" maxlength="{{config('mobile.token_length', 6)}}" class="form-control" id="token" name="token" placeholder="验证码">
                     </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 text-center">
-                        <button type="submit" class="login-btn btn btn-default" disabled>登陆</button>  <a class="btn" href="/auth/login">邮箱登陆</a>
+                        <button type="submit" id="login-btn " class="btn btn-default" >登陆</button>  <a class="btn" href="/auth/login">邮箱登陆</a>
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -72,14 +72,21 @@
             if(availableSendIn > 0) {
                 openClock(send_btn, availableSendIn)
             }
+
+            var errorscount = {{count($errors)}}
+            if(errorscount > 0) {
+                $("#token").removeAttr('disabled')
+            } else {
+                $("#token").attr('disabled', 'disabled')
+            }
             $("#mobile").removeAttr('disabled')
-            $("#token").attr('disabled', 'disabled')
+            $("#login-btn").removeAttr('disabled')
             openClock(send_btn, 0)
             send_btn.click(function() {
                 $.post('/auth/login-send', $('#login-form').serialize(), function(json) {
                     if(json.code == 0) {
                         openClock(send_btn, 60)
-                        $("#mobile").attr('disabled', 'disabled')
+//                        $("#mobile").attr('disabled', 'disabled')
                         $("#token").removeAttr('disabled')
                         $("#login-btn").removeAttr('disabled')
                         modal({

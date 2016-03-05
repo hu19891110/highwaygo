@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Home'], function () {
 	Route::get('item/{id}', 'ItemController@getId')->where('id', '[0-9]+');
 	Route::controller('item', 'ItemController');
 	Route::controller('auth', 'AuthController');
+	Route::controller('password', 'PasswordController');
 	Route::controller('user', 'UserController');
 	Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha');
 	Route::controller('/', 'IndexController');

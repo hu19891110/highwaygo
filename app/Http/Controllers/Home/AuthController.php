@@ -66,6 +66,10 @@ class AuthController extends Controller {
 		return $this->post_login($request);
 	}
 
+	public function getRegister(Request $request) {
+		return view('home.auth.register')->with('title', '注册邮箱帐号');
+	}
+
 	public function getNeedCaptcha(Request $request) {
 		return $this->hasTooManyLoginAttempts($request) ? 1 : 0;
 	}
@@ -74,8 +78,8 @@ class AuthController extends Controller {
 		return view('home.auth.mobile.login')->with('title', '手机号登陆')->with('availableSendIn', $this->getAvailableSendIn($request));
 	}
 
-	public function getRegister(Request $request) {
-		return view('home.auth.register')->with('title', '注册邮箱帐号');
+	public function getMobileRegister(Request $request) {
+		return view('home.auth.mobile.register')->with('title', '手机号注册')->with('availableSendIn', $this->getAvailableSendIn($request));
 	}
 
 	/**
