@@ -19,8 +19,9 @@ Route::group(['middleware' => ['auth.admin'], 'namespace' => 'Admin'], function 
 Route::group(['namespace' => 'Home', 'middleware' => ['auth.view']], function () {
 	Route::get('home', 'IndexController@getIndex');
 	Route::any('search', 'ItemController@anySearch');
-	Route::get('list/{id?}', 'ItemController@getList')->where('id', '[0-9]+');
-	Route::get('item/{id}', 'ItemController@getId')->where('id', '[0-9]+');
+	Route::get('list/{id?}', 'ItemController@getList');
+	Route::get('item/{item}', 'ItemController@getId');
+	Route::get('item/favorite/{item}', 'ItemController@getFavorite');
 	Route::controller('item', 'ItemController');
 	Route::controller('auth', 'AuthController');
 	Route::controller('password', 'PasswordController');

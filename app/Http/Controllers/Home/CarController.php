@@ -9,12 +9,13 @@
 namespace app\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
 
 class CarController extends Controller {
 	public function __construct() {
 		$this->middleware('auth');
 	}
 	public function getIndex() {
-		return '';
+		return Car::get(1);
 	}
 }

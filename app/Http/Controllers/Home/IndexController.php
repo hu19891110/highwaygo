@@ -15,13 +15,13 @@ class IndexController extends Controller {
 		$banners = Cache::rememberForever('index.banners', function () {
 			return Banner::get();
 		});
-		$newest_items = Cache::rememberForever('index.newest_items', function () {
+		$newest_items = Cache::rememberForever('item.newest_items', function () {
 			return Item::orderBy('created_at', 'desc')->take(8)->get();
 		});
-		$hot_items = Cache::rememberForever('index.hot_items', function () {
+		$hot_items = Cache::rememberForever('item.hot_items', function () {
 			return Item::take(8)->get();
 		});
-		$recommend_items = Cache::rememberForever('index.recommend_items', function () {
+		$recommend_items = Cache::rememberForever('item.recommend_items', function () {
 			return Item::take(4)->get();
 		});
 		return view('home.index')

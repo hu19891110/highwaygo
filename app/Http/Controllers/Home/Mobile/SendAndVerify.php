@@ -14,7 +14,10 @@ use Illuminate\Support\MessageBag;
 trait SendAndVerify {
 	use ThrottlesSend, ThrottlesVerify;
 
-	// 注册帐号发送验证码
+	/**
+	 * @param Request $request
+	 * @return array
+	 */
 	public function postRegisterSend(Request $request) {
 		$result = $this->resolveResult(
 			$this->send($request, [$request->only('mobile'), ['mobile' => 'unique:users']])
@@ -28,6 +31,10 @@ trait SendAndVerify {
 		}
 	}
 
+	/**
+	 * @param Request $request
+	 * @return $this|\Illuminate\Http\RedirectResponse
+	 */
 	public function postMobileRegister(Request $request) {
 		$result = $this->resolveResult($this->verify($request, [
 			$request->only('password', 'password_confirmation', 'name'),
@@ -51,6 +58,10 @@ trait SendAndVerify {
 			->withErrors($errors);
 	}
 
+	/**
+	 * @param Request $request
+	 * @return array
+	 */
 	public function postLoginSend(Request $request) {
 		$mobile = $request->input('mobile');
 		if (!User::where('mobile', '=', $mobile)->get()->first()) {
@@ -66,6 +77,10 @@ trait SendAndVerify {
 		}
 	}
 
+	/**
+	 * @param Request $request
+	 * @return $this|\Illuminate\Http\RedirectResponse
+	 */
 	public function postMobileLogin(Request $request) {
 		$result = $this->resolveResult($this->verify($request));
 		if ($result === true) {
@@ -88,6 +103,10 @@ trait SendAndVerify {
 			->withErrors($errors);
 	}
 
+	/**
+	 * @param $result
+	 * @return array|bool
+	 */
 	private function resolveResult($result) {
 		if ($result === true) {
 			return true;
@@ -105,6 +124,11 @@ trait SendAndVerify {
 
 	}
 
+	/**
+	 * @param Request $request
+	 * @param null $v
+	 * @return bool|string
+	 */
 	protected function send(Request $request, $v = null) {
 		if ($this->hasTooManySendAttempts($request)) {
 			return '每' . $this->getSendLockTime() . '分钟才可以发一次短信验证码, 剩[' . $this->getAvailableSendIn($request) . ']秒';
@@ -139,6 +163,11 @@ trait SendAndVerify {
 		}
 	}
 
+	/**
+	 * @param Request $request
+	 * @param null $v
+	 * @return bool|string
+	 */
 	protected function verify(Request $request, $v = null) {
 		if ($this->hasTooManyVerifyAttempts($request)) {
 			return '每' . $this->getVerifyLockTime() . '分钟才可以验证一次短信验证码, 剩[' . $this->availableVerifyIn($request) . ']秒';
@@ -174,16 +203,25 @@ trait SendAndVerify {
 
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function mobileRule() {
 		return [
 			'mobile' => ['required', 'regex:/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/'], //注意: 当使用regex模式时，您必须使用数组来取代"|"作为分隔，尤其是当正规表示式中含有"|"字串。
 		];
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getMobileLoginPath() {
 		return property_exists($this, 'mobileLoginPath') ? $this->mobileLoginPath : 'auth/mobile-login';
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getMobileRegisterPath() {
 		return property_exists($this, 'mobileRegisterPath') ? $this->mobileRegisterPath : 'auth/mobile-register';
 	}

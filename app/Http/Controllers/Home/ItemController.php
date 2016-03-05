@@ -4,18 +4,49 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classification;
+use App\Models\Favorite;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class ItemController extends Controller {
 
 	public function __construct() {
-		$this->middleware('auth', ['only' => ['anySearch']]);
+		$this->middleware('auth', ['only' => ['anySearch', 'getFavorite']]);
 	}
 
-	public function getId(Request $request, $id) {
-		return $id;
+	public function getId(Request $request, Item $item) {
+
+		$page    = intval($request->input('page', 1));
+		$perpage = 10;
+//		$item    = Item::find($id, ['id', 'name', 'brief', 'classification_id', 'stock', 'price', 'number', 'thumb_img']);
+		//		if ($item == null) {
+		//			return redirect('/');
+		//		}
+		$id     = $item->id;
+		$detail = Cache::rememberForever("item.detail.{$item->id}", function () use ($id) {
+			return Item::find($id, ['detail']);
+		});
+		$imgs = Cache::rememberForever("item.imgs.{$item->id}", function () use ($item) {
+			return $item->imgs;
+		});
+		$comments = Cache::rememberForever("item.comments.{$id}.{$page}", function () use ($item, $page, $perpage) {
+			/** 有问题 */
+			return $item->comments()->paginate($perpage);
+		});
+		$recommend_items = Cache::rememberForever('item.recommend_items', function () {
+			return Item::take(4)->get();
+		});
+		$favorite = Auth::check() ? $item->favorites()->where('user_id', '=', Auth::user()->id)->first() : null;
+
+		return view('home.item.detail')
+			->with('title', $item->name)
+			->with('item', $item)
+			->with('recommend_items', $recommend_items)
+			->with('detail', $detail->detail)
+			->with('favorite', $favorite)
+			->with('imgs', $imgs);
 	}
 
 	public function anySearch(Request $request) {
@@ -59,63 +90,16 @@ class ItemController extends Controller {
 		return view('home.item.classifications')
 			->with('classifications', $classifications)
 			->with('title', '所有商品分类');
-
 	}
-//
-	//	public function getGe() {
-	//		$items = [
-	//			[
-	//				'name'              => '洗面奶1',
-	//				'brief'             => '这是洗面奶1的简介',
-	//				'detail'            => '这是洗面奶1的详情',
-	//				'classification_id' => 2,
-	//				'stock'             => 1,
-	//				'price'             => 1.1,
-	//			],
-	//			[
-	//				'name'              => '洗面奶2',
-	//				'brief'             => '这是洗面奶2的简介',
-	//				'detail'            => '这是洗面奶2的详情',
-	//				'classification_id' => 2,
-	//				'stock'             => 2,
-	//				'price'             => 2.2,
-	//			],
-	//			[
-	//				'name'              => '洗发露1',
-	//				'brief'             => '这是洗发露1的简介',
-	//				'detail'            => '这是洗发露1的详情',
-	//				'classification_id' => 4,
-	//				'stock'             => 40,
-	//				'price'             => 4.4,
-	//			],
-	//			[
-	//				'name'              => '眼影1',
-	//				'brief'             => '这是眼影1的简介',
-	//				'detail'            => '这是眼影1的详情',
-	//				'classification_id' => 6,
-	//				'stock'             => 6,
-	//				'price'             => 6.66,
-	//			],
-	//			[
-	//				'name'              => '饮料',
-	//				'brief'             => '这是饮料1的简介',
-	//				'detail'            => '这是饮料1的详情',
-	//				'classification_id' => 11,
-	//				'stock'             => 111,
-	//				'price'             => 11.11,
-	//			],
-	//		];
-	//		foreach ($items as $item) {
-	//			$itemModel                    = new Item;
-	//			$itemModel->name              = $item['name'];
-	//			$itemModel->brief             = $item['brief'];
-	//			$itemModel->detail            = $item['detail'];
-	//			$itemModel->classification_id = $item['classification_id'];
-	//			$itemModel->stock             = $item['stock'];
-	//			$itemModel->price             = $item['price'];
-	//			$itemModel->thumb_img         = '/img/tests/thumb.jpg';
-	//			$itemModel->save();
-	//		}
-	//	}
+
+	public function getFavorite(Request $request, Item $item) {
+		if (Auth::user()->favorites()->where('item_id', '=', $item->id)->first() === null) {
+			$favorite          = new Favorite;
+			$favorite->user_id = Auth::user()->id;
+			$favorite->item_id = $item->id;
+			$favorite->save();
+		}
+		return redirect()->back();
+	}
 
 }

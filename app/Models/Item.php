@@ -21,4 +21,5 @@ class Item extends Model {
 	public function imgs() {
 		return $this->hasMany('App\Models\ItemImg');
 	}
+
 }

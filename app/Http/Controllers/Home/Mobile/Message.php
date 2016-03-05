@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Config;
 
 class Message {
 
+	/**
+	 * @param Request $request
+	 * @return bool
+	 */
 	public static function send(Request $request) {
 		$modelName = config('mobile.model', 'App\Models\Message');
 		$mobile    = $request->input('mobile');
@@ -26,6 +30,10 @@ class Message {
 		return true;
 	}
 
+	/**
+	 * @param Request $request
+	 * @return bool
+	 */
 	public static function verify(Request $request) {
 		$model = self::getModel(
 			config('mobile.model', 'App\Models\Message'),
@@ -39,6 +47,11 @@ class Message {
 		return false;
 	}
 
+	/**
+	 * @param $modelName
+	 * @param $mobile
+	 * @return mixed
+	 */
 	protected static function getModel($modelName, $mobile) {
 		return $modelName::where('mobile', '=', $mobile)
 //			->where('token', '=', $token)
@@ -46,6 +59,10 @@ class Message {
 			->whereRaw('unix_timestamp(created_at) > ?', [Carbon::now()->timestamp - config('mobile.time', 5) * 60])->get()->first();
 	}
 
+	/**
+	 * @param $length
+	 * @return string
+	 */
 	protected static function rand($length) {
 		$length = intval($length);
 		$token  = '';

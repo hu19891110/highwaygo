@@ -14,7 +14,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class AuthController extends Controller {
 	use AuthenticatesAndRegistersUsers, ThrottlesLogins;
@@ -26,6 +29,9 @@ class AuthController extends Controller {
 	protected $lockoutTime      = 0;
 	protected $maxLoginAttempts = 5;
 
+	/**
+	 * AuthController constructor.
+	 */
 	public function __construct() {
 		$this->middleware('mobile.access', ['only' => [
 			'postRegisterSend',
@@ -38,17 +44,28 @@ class AuthController extends Controller {
 		]);
 	}
 
+	/**
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
 	public function getLogout() {
 		Auth::logout();
 		return redirect('/');
 	}
 
+	/**
+	 * @param Request $request
+	 * @return View
+	 */
 	public function getLogin(Request $request) {
 		return view('home.auth.login')
 			->with('title', '登陆')
 			->with('needCaptcha', $this->getNeedCaptcha($request));
 	}
 
+	/**
+	 * @param Request $request
+	 * @return Redirect|Response
+	 */
 	public function postLogin(Request $request) {
 		if ($this->getNeedCaptcha($request) == 1) {
 			$v = Validator::make($request->only('captcha'), [
@@ -66,27 +83,41 @@ class AuthController extends Controller {
 		return $this->post_login($request);
 	}
 
+	/**
+	 * @param Request $request
+	 * @return View
+	 */
 	public function getRegister(Request $request) {
 		return view('home.auth.register')->with('title', '注册邮箱帐号');
 	}
 
+	/**
+	 * @param Request $request
+	 * @return int
+	 */
 	public function getNeedCaptcha(Request $request) {
 		return $this->hasTooManyLoginAttempts($request) ? 1 : 0;
 	}
 
+	/**
+	 * @param Request $request
+	 * @return View
+	 */
 	public function getMobileLogin(Request $request) {
 		return view('home.auth.mobile.login')->with('title', '手机号登陆')->with('availableSendIn', $this->getAvailableSendIn($request));
 	}
 
+	/**
+	 * @param Request $request
+	 * @return View
+	 */
 	public function getMobileRegister(Request $request) {
 		return view('home.auth.mobile.register')->with('title', '手机号注册')->with('availableSendIn', $this->getAvailableSendIn($request));
 	}
 
 	/**
-	 * Get a validator for an incoming registration request.
-	 *
-	 * @param  array  $data
-	 * @return \Illuminate\Contracts\Validation\Validator
+	 * @param array $data
+	 * @return Validator
 	 */
 	protected function validator(array $data) {
 		return Validator::make($data, [
@@ -97,9 +128,7 @@ class AuthController extends Controller {
 	}
 
 	/**
-	 * Create a new user instance after a valid registration.
-	 *
-	 * @param  array  $data
+	 * @param array $data
 	 * @return User
 	 */
 	protected function create(array $data) {
