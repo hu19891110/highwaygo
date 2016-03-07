@@ -89,6 +89,37 @@
     background-color: #a09d1d;
 }
 
+.bg000 {
+    background-color: #000;
+}
+.bg111 {
+    background-color: #111;
+}
+.bg222 {
+    background-color: #222222;
+}
+.bg333 {
+    background-color: #333333;
+}
+.bg444 {
+    background-color: #444444;
+}
+.bg555 {
+    background-color: #555555;
+}
+.bg666 {
+    background-color: #666666;
+}
+.bg777 {
+    background-color: #777777;
+}
+.bg888 {
+    background-color: #888888;
+}
+.bg999 {
+    background-color: #999999;
+}
+
 .color-grey {
     color: grey;
 }

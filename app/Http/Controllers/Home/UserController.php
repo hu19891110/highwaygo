@@ -17,6 +17,6 @@ class UserController extends Controller {
 	}
 
 	public function getIndex(Request $request) {
-		return 'user';
+		return view('home.user.index');
 	}
 }

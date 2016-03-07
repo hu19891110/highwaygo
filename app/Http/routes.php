@@ -26,7 +26,9 @@ Route::group(['namespace' => 'Home', 'middleware' => ['auth.view']], function ()
 	Route::controller('auth', 'AuthController');
 	Route::controller('password', 'PasswordController');
 	Route::group(['middleware' => ['auth']], function () {
-		Route::controller('car', 'CarController');
+		Route::get('cart/add/{item}/{count?}', 'CartController@getAdd');
+		Route::get('cart/remove/{item}/{count?}', 'CartController@getRemove');
+		Route::controller('cart', 'CartController');
 		Route::controller('user', 'UserController');
 	});
 	Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha');

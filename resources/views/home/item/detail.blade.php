@@ -56,10 +56,10 @@
                     <div class="panel-footer">
                         <div class="container-fluid well-sm">
                             <div class="col-xs-6 text-center">
-                                <a {!! $favorite ? ' ': 'href="/item/favorite/'. $item->id . '"'!!} class="btn btn-info"><i {!! $favorite?' style="color: OrangeRed;"':'' !!} class="glyphicon glyphicon-heart{{$favorite ? '':'-empty'}} " ></i> 收藏</a>
+                                <a href="/item/favorite/{{$item->id}}" class="btn btn-info"><i {!! $favorite?' style="color: OrangeRed;"':'' !!} class="glyphicon glyphicon-heart{{$favorite ? '':'-empty'}} " ></i> 收藏</a>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <a {!! $item->stock == 0 ? '': 'href="/car/add/' . $item->id . '"' !!} class="btn btn-disabled btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> 加入购物车</a>
+                                <a {!! $item->stock == 0 ? '': 'href="/cart/add/' . $item->id . '"' !!} class="btn btn-disabled btn-success {!! $item->stock ? '':'disabled' !!} "><i class="glyphicon glyphicon-shopping-cart"></i> 加入购物车</a>
                             </div>
 
                         </div>

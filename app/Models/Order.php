@@ -10,10 +10,16 @@ class Order extends Model {
 	public function address() {
 		return $this->belongsTo('App\Models\Address');
 	}
+
 	public function comments() {
 		return $this->hasMany('App\Models\ItemComment');
 	}
+
 	public function deliveries() {
 		return $this->hasMany('App\Models\Delivery');
+	}
+
+	public function items() {
+		return $this->hasMany('App\Models\OrderItem');
 	}
 }

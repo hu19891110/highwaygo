@@ -42,7 +42,7 @@
                             <li><a href="/auth/logout"><i class="glyphicon glyphicon-log-out"></i> 注销</a></li>
                         </ul>
                     </li>
-                    <li><a href="/car/index"><i class="glyphicon glyphicon-shopping-cart"></i> 购物车</a></li>
+                    <li><a href="/cart/index"><i class="glyphicon glyphicon-shopping-cart"></i> 购物车</a></li>
                 @else
                     <li><a href="/auth/login"><i class="glyphicon glyphicon-user"></i> 登陆</a></li>
                     <li><a href="/auth/register"><i class="glyphicon glyphicon-registration-mark"></i> 注册</a></li>

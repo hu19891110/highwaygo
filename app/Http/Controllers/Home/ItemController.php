@@ -93,11 +93,13 @@ class ItemController extends Controller {
 	}
 
 	public function getFavorite(Request $request, Item $item) {
-		if (Auth::user()->favorites()->where('item_id', '=', $item->id)->first() === null) {
+		if (($favorite = Auth::user()->favorites()->where('item_id', '=', $item->id)->first()) === null) {
 			$favorite          = new Favorite;
 			$favorite->user_id = Auth::user()->id;
 			$favorite->item_id = $item->id;
 			$favorite->save();
+		} else {
+			$favorite->delete();
 		}
 		return redirect()->back();
 	}

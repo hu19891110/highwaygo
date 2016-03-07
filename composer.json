@@ -25,7 +25,13 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "alipay/lib/alipay_core.function.php",
+            "alipay/lib/alipay_md5.function.php",
+            "alipay/lib/alipay_notify.class.php",
+            "alipay/lib/alipay_submit.class.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
