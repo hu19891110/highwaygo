@@ -17,3 +17,8 @@
     {!! Html::style('css/home/font.css') !!}
     {!! Html::style('css/home/my-theme.css') !!}
 @stop
+
+@section('ext_scripts')
+    @parent
+    {!! Html::script('js/img-load-default-on-error.js') !!}
+@stop

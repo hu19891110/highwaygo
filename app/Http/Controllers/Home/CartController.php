@@ -77,6 +77,7 @@ class CartController extends Controller {
 		try {
 			$order = DB::transaction(function () use ($address_id, $mark) {
 				$order             = new Order;
+				$order->user_id    = Auth::user()->id;
 				$order->address_id = $address_id;
 				$order->mark       = $mark;
 				$order->number     = date('Ymd') . substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);

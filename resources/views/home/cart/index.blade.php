@@ -23,7 +23,7 @@
                             <img width="100" src="{{$item[0]->thumb_img}}" alt="{{$item[0]->name}}">
                         </td>
                         <td class="col-md-1 text-center" style="vertical-align: middle">
-                            {{$item[0]->name}}
+                            <a href="/item/{{$item[0]->id}}">{{$item[0]->name}}</a>
                         </td>
                         <td class="col-md-2 text-center hidden-xs" style="vertical-align: middle">
                             <span class="well well-sm">￥{{$item[0]->price}}</span>

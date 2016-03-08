@@ -71,7 +71,7 @@
                                     @endforeach
                                 </select>
                             @else
-                                <a href="/user">没有收获地址? 去个人中心添加</a>
+                                <a href="/user/address">没有收获地址? 去个人中心添加</a>
                             @endif
                         </td>
                     </tr>
