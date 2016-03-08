@@ -34,4 +34,6 @@
     </tfoot>
 @endforelse
 </table>
-{!! $favorites->render() !!}
+<div class="text-center">
+    {!! $favorites->render() !!}
+</div>

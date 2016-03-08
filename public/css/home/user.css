@@ -63,7 +63,7 @@ body {
 }
 
 .xs-side {
-    width: 100%;
+    /*width: 100%;*/
     position: fixed;
     height: 100%;
     z-index: 1000;

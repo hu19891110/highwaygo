@@ -43,7 +43,6 @@ class UserController extends Controller {
 	public function getFavorite() {
 		$perpage   = 12;
 		$favorites = Auth::user()->favorites()->paginate($perpage);
-//		dd($favorites);
 		return view('home.user.layout')
 			->with('favorites', $favorites)
 			->with('page', 'favorite')

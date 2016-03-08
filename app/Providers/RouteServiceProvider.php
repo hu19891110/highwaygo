@@ -33,9 +33,9 @@ class RouteServiceProvider extends ServiceProvider {
 			if ($item) {
 				return $item;
 			}
-
 			throw new NotFoundHttpException;
 		});
+		$router->model('order', 'App\Models\Order');
 	}
 
 	/**

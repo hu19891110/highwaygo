@@ -28,8 +28,11 @@ Route::group(['namespace' => 'Home', 'middleware' => ['auth.view']], function ()
 	Route::group(['middleware' => ['auth']], function () {
 		Route::get('cart/add/{item}/{count?}', 'CartController@getAdd');
 		Route::get('cart/remove/{item}/{count?}', 'CartController@getRemove');
+		Route::get('order/{order}', 'OrderController@getDetail');
+		Route::get('order/cancle/{order}', 'OrderController@getCancle');
 		Route::controller('cart', 'CartController');
 		Route::controller('user', 'UserController');
+		Route::controller('order', 'OrderController');
 	});
 	Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha');
 	Route::controller('/', 'IndexController');
