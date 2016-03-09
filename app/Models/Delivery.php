@@ -9,6 +9,6 @@ class Delivery extends Model {
 	protected $table = 'deliveries';
 
 	public function order() {
-		return $this->belongsTo('App\Models\Order');
+		return $this->hasOne('App\Models\Order');
 	}
 }

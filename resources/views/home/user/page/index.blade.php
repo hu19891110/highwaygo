@@ -13,7 +13,7 @@
     <div>
         <div class="col-sm-6">
             <div class="well text-center">
-                <a href="/user/info" class="btn"><i class="glyphicon glyphicon-user"></i> 个人信息</a>
+                <a href="/user/password" class="btn"><i class="glyphicon glyphicon-lock"></i> 修改密码</a>
             </div>
         </div>
         <div class="col-sm-6">

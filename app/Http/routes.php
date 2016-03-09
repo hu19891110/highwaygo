@@ -28,11 +28,15 @@ Route::group(['namespace' => 'Home', 'middleware' => ['auth.view']], function ()
 	Route::group(['middleware' => ['auth']], function () {
 		Route::get('cart/add/{item}/{count?}', 'CartController@getAdd');
 		Route::get('cart/remove/{item}/{count?}', 'CartController@getRemove');
+		Route::get('user/add-address', 'UserController@getAddAddress');
 		Route::get('order/{order}', 'OrderController@getDetail');
 		Route::get('order/cancle/{order}', 'OrderController@getCancle');
 		Route::controller('cart', 'CartController');
 		Route::controller('user', 'UserController');
 		Route::controller('order', 'OrderController');
+		// 阿里支付接口
+		Route::get('alipay/pay/{order}', '\App\Http\Controllers\Alipay\Controller@getTrade');
+		Route::controller('alipay', '\App\Http\Controllers\Alipay\Controller');
 	});
 	Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha');
 	Route::controller('/', 'IndexController');

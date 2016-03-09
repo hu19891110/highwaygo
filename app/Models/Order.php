@@ -15,8 +15,8 @@ class Order extends Model {
 		return $this->hasMany('App\Models\ItemComment');
 	}
 
-	public function deliveries() {
-		return $this->hasMany('App\Models\Delivery');
+	public function delivery() {
+		return $this->hasOne('App\Models\Delivery');
 	}
 
 	public function items() {

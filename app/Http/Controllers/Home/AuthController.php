@@ -9,7 +9,7 @@
 namespace app\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home\AuthenticatesAndRegistersUsers;
-use App\Http\Controllers\Home\Mobile\SendAndVerify;
+use App\Http\Controllers\Home\Mobile\RegisterAndLoginTrait;
 use App\Models\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\View;
 
 class AuthController extends Controller {
 	use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-	use SendAndVerify;
+	use RegisterAndLoginTrait;
 
 	protected $redirectPath     = '/';
 	protected $loginPath        = 'auth/login';

@@ -1,3 +1,5 @@
+<h3 class="main-title">我的收藏</h3>
+<hr>
 <table class="table table-responsive">
     <thead>
     <tr>
@@ -17,7 +19,7 @@
             <a href="/item/{{$favorite->item->id}}">{{$favorite->item->name}}</a>
         </td>
         <td class="col-md-2 text-center hidden-xs" style="vertical-align: middle">
-            <span class="well well-sm">{{$favorite->created_at}}</span>
+            <span class="well well-sm">{{$favorite->created_at->diffForHumans()}}</span>
         </td>
         <td class="col-md-4 text-center" style="vertical-align: middle">
             <a href="/item/favorite/{{$favorite->item->id}}" class="btn btn-warning">取消收藏 </a>

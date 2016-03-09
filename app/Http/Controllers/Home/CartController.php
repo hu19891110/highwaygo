@@ -80,10 +80,13 @@ class CartController extends Controller {
 				$order->user_id    = Auth::user()->id;
 				$order->address_id = $address_id;
 				$order->mark       = $mark;
+				$order->price      = 0;
 				$order->number     = date('Ymd') . substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 				$order->save();
 				$items = Cart::getLists();
+				$price = 0;
 				foreach ($items as $item) {
+					$price += $item[0]->price * $item[1];
 					$item[0]->stock -= $item[1];
 					$item[0]->save();
 					$order_item           = new OrderItem;
@@ -92,6 +95,8 @@ class CartController extends Controller {
 					$order_item->count    = $item[1];
 					$order_item->save();
 				}
+				$order->price = $price;
+				$order->save();
 				Cart::clear();
 				return $order;
 			});
@@ -99,7 +104,7 @@ class CartController extends Controller {
 			abort(501, '服务器发生故障');
 		}
 		// 用户订单详情页面
-		return redirect('index');
+		return redirect('/order/' . $order->id);
 //		dd($order);
 	}
 }

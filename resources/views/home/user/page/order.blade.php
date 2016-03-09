@@ -1,10 +1,13 @@
+<h3 class="main-title">我的订单</h3>
+<hr>
 <table class="table table-responsive">
     <thead>
     <tr>
         <th class="col-md-2 text-center">订单号</th>
         <th class="col-md-2 text-center hidden-xs">下单时间</th>
-        <th class="col-md-2 text-center hidden-xs">支付类型</th>
+        <th class="col-md-1 text-center hidden-xs">支付类型</th>
         <th class="col-md-3 text-center">订单状态</th>
+        <th class="col-md-1 text-center">物流状态</th>
         <th class="col-md-3 text-center">操作</th>
     </tr>
     </thead>
@@ -17,11 +20,14 @@
             <td class="col-md-2 text-center hidden-xs" style="vertical-align: middle">
                 {{$order->created_at->diffForHumans()}}
             </td>
-            <td class="col-md-2 text-center hidden-xs" style="vertical-align: middle">
+            <td class="col-md-1 text-center hidden-xs" style="vertical-align: middle">
                 {{$order->pay_type}}
             </td>
             <td class="col-md-3 text-center" style="vertical-align: middle">
                 {{$order->status}}
+            </td>
+            <td class="col-md-1 text-center" style="vertical-align: middle">
+                {{$order->delivery ? '已发货' : '待发货'}}
             </td>
             <td class="col-md-3 text-center" style="vertical-align: middle">
                 @if($order->status == '已取消')

@@ -6,6 +6,6 @@ return [
 	'key'           => 'g9hgizr9yr00t5zoqcs6saavam5g1lc1',
 	'sign_type'     => 'MD5',
 	'input_charset' => 'utf-8',
-	'cacert'        => 'alipay/cacert.pem',
+	'cacert'        => base_path() . '/alipay/cacert.pem',
 	'transport'     => 'http',
 ];

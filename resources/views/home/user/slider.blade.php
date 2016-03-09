@@ -2,7 +2,7 @@
     $menus = [
         [
                 'index' => '<i class="glyphicon glyphicon-home"></i> 首页',
-                'info' => '<i class="glyphicon glyphicon-user"></i> 个人信息',
+//                'info' => '<i class="glyphicon glyphicon-user"></i> 个人信息',
                 'address' => '<i class="glyphicon glyphicon-map-marker"></i> 收获地址',
                 'password' => '<i class="glyphicon glyphicon-lock"></i> 修改密码',
         ],
