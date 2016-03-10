@@ -23,8 +23,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
  2.创建.env 然后加入
 
-MAIL_FROM_ADDRESS=670344600@qq.com
-MAIL_FROM_NAME=Zaygeegee
+MAIL_FROM_ADDRESS=你的邮箱地址
+MAIL_FROM_NAME=你的名字
 
 这两个键值
 
