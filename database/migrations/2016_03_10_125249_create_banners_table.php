@@ -3,17 +3,19 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBanIpsTables extends Migration {
+class CreateBannersTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('ban_ips', function (Blueprint $table) {
+		Schema::create('banners', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('ip', 15)->index()->unique();
-			$table->timestamp('expired');
+			$table->string('img');
+			$table->string('url')->nullable();
+			$table->char('bgcolor', 7)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}
@@ -24,6 +26,6 @@ class CreateBanIpsTables extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('ban_ips');
+		Schema::drop('banners');
 	}
 }

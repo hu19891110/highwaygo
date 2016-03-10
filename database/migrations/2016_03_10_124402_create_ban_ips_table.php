@@ -3,15 +3,18 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class ChangeAddressesTable extends Migration {
+class CreateBanIpsTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::table('addresses', function (Blueprint $table) {
-			$table->char('pc', 6)->nullable();
+		Schema::create('ban_ips', function (Blueprint $table) {
+			$table->increments('id');
+			$table->string('ip', 15)->index()->unique();
+			$table->timestamp('expired');
+			$table->timestamps();
 		});
 	}
 
@@ -21,8 +24,6 @@ class ChangeAddressesTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::table('addresses', function (Blueprint $table) {
-			$table->dropColumn('pc');
-		});
+		Schema::drop('ban_ips');
 	}
 }

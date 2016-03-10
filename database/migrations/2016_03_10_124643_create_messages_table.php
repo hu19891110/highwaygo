@@ -3,18 +3,19 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBannersTable extends Migration {
+class CreateMessagesTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('banners', function (Blueprint $table) {
+		Schema::create('messages', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('img');
-			$table->string('url')->nullable();
-			$table->softDeletes();
+			$table->string('ip', 15)->index();
+			$table->char('mobile', 11)->index();
+			$table->string('token')->index();
+			$table->boolean('active')->default(false);
 			$table->timestamps();
 		});
 	}
@@ -25,6 +26,6 @@ class CreateBannersTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('banners');
+		Schema::drop('messages');
 	}
 }

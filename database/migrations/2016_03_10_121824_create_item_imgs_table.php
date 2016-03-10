@@ -10,9 +10,6 @@ class CreateItemImgsTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::table('items', function (Blueprint $table) {
-			$table->string('thumb_img');
-		});
 		Schema::create('item_imgs', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('item_id')->unsigned();
@@ -30,8 +27,5 @@ class CreateItemImgsTable extends Migration {
 	 */
 	public function down() {
 		Schema::drop('item_imgs');
-		Schema::table('items', function (Blueprint $table) {
-			$table->dropColumn('thumb_img');
-		});
 	}
 }

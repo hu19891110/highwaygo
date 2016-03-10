@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateItemsTable extends Migration {
+class CreateItemsTables extends Migration {
 	/**
 	 * Run the migrations.
 	 *
@@ -24,9 +24,16 @@ class CreateItemsTable extends Migration {
 			// 库存
 			$table->integer('stock')->unsigned();
 			// 价格
+			$table->unsignedTinyInteger('hot')->default(0); // 热卖指数基数
+			$table->unsignedTinyInteger('recommend')->default(0); // 推荐指数基数
+			$table->string('number')->nullable();
 			$table->double('price');
 			$table->softDeletes();
 			$table->timestamps();
+			$table->index('name');
+			$table->index('number');
+			$table->index('brief');
+			$table->string('thumb_img');
 		});
 	}
 

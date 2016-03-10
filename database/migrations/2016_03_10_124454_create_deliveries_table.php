@@ -19,6 +19,9 @@ class CreateDeliveriesTable extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 		});
+		Schema::table('orders', function (Blueprint $table) {
+			$table->foreign('delivery_id')->references('id')->on('deliveries');
+		});
 	}
 
 	/**
@@ -27,6 +30,9 @@ class CreateDeliveriesTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
+		Schema::table('orders', function (Blueprint $table) {
+			$table->dropForeign('delivery_id');
+		});
 		Schema::drop('deliveries');
 	}
 }
